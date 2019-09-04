@@ -2,15 +2,29 @@ var drumButtons = document.getElementsByClassName("drum");
 
 //Event Listeners
 document.addEventListener("keydown", function(e){
-    callSound(e.key);
+    pressKey(e.key);
 });
 
 for(var i = 0; i < drumButtons.length; i++){
     drumButtons[i].addEventListener("click", function(){
-        callSound(this.innerHTML);
+        pressKey(this.innerHTML);
     });
 
 
+}
+
+
+function pressKey(key){
+    callSound(key);
+    keyPressAnimation(key);
+}
+
+async function keyPressAnimation(key){
+
+    document.querySelector("."+key).classList.add("pressed");
+    await sleep(300);
+    document.querySelector("."+key).classList.remove("pressed");
+    
 }
 
 //Function play certain sound according to the key(string)
@@ -49,5 +63,12 @@ function callSound(key){
         default:
             break;
     }
+
+    
 }
 
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
